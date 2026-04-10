@@ -526,7 +526,7 @@ body {
   left: 0;
   right: 0;
   top: 86px;
-  bottom: 84px;
+  bottom: 96px;
   background: var(--paper);
   border-radius: 14px 14px 0 0;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
@@ -1048,6 +1048,23 @@ body {
   color: var(--ink-faint);
 }
 
+.phone.detail-open .overlay {
+  bottom: calc(118px + env(safe-area-inset-bottom));
+}
+
+.phone.detail-open .bbot-collapsible {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  max-height: 170px;
+}
+
+.phone.detail-open .panel-region {
+  bottom: calc(126px + env(safe-area-inset-bottom));
+}
+
 @media (max-width: 680px) {
   .demo-shell {
     padding: 0;
@@ -1059,5 +1076,345 @@ body {
     border-radius: 0;
     border: none;
     box-shadow: none;
+  }
+
+  .sbar-collapsible {
+    font-size: 13px;
+    padding: calc(11px + env(safe-area-inset-top)) 18px 6px;
+  }
+
+  .bbar-inner {
+    padding: 10px 14px 9px;
+  }
+
+  .logo {
+    width: 36px;
+    height: 36px;
+    font-size: 8px;
+  }
+
+  .bname {
+    font-size: 15px;
+  }
+
+  .bmeta {
+    font-size: 10px;
+  }
+
+  .btag {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .anna-zone {
+    padding: 14px 14px 10px;
+  }
+
+  .anna-text {
+    font-size: 14px;
+    line-height: 1.68;
+  }
+
+  .feed-grid {
+    gap: 8px;
+    padding: 10px 10px 14px;
+  }
+
+  .fi-body {
+    padding: 8px 8px 9px;
+  }
+
+  .fi-tag {
+    min-height: 14px;
+    font-size: 10px;
+  }
+
+  .fi-name {
+    font-size: 13px;
+    min-height: 34px;
+  }
+
+  .fi-price {
+    font-size: 18px;
+    line-height: 1.1;
+  }
+
+  .new-badge,
+  .presale-badge {
+    font-size: 8px;
+    padding: 3px 6px;
+  }
+
+  .viewed-mark {
+    font-size: 8px;
+    padding: 2px 6px;
+  }
+
+  .bbot-collapsible {
+    max-height: 168px;
+    padding: 10px 12px calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .chips-row {
+    gap: 6px;
+    margin-bottom: 8px;
+    padding-top: 2px;
+  }
+
+  .chip {
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 16px;
+  }
+
+  .foot-badge {
+    top: -6px;
+    right: -6px;
+    font-size: 8px;
+    min-width: 16px;
+    height: 16px;
+  }
+
+  .input-row {
+    gap: 8px;
+  }
+
+  .input-field {
+    border-radius: 20px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .send-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .send-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .overlay {
+    top: 96px;
+  }
+
+  .ov-top {
+    padding: 10px 14px 6px;
+  }
+
+  .ov-back {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+  }
+
+  .prod-img {
+    height: 270px;
+  }
+
+  .tryon-btn {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .ov-body {
+    padding: 12px 14px 4px;
+  }
+
+  .prod-name {
+    font-size: 16px;
+  }
+
+  .prod-meta {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .anna-card {
+    padding: 9px 10px;
+    margin-bottom: 10px;
+  }
+
+  .ac-h {
+    margin-bottom: 6px;
+  }
+
+  .ac-ava {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  .ac-nm {
+    font-size: 11px;
+  }
+
+  .ac-lb {
+    font-size: 10px;
+  }
+
+  .ac-rec {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  .sec-t {
+    font-size: 12px;
+    margin-bottom: 7px;
+  }
+
+  .sec-t::before {
+    height: 11px;
+  }
+
+  .size-row {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .sz {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .sz.rec::after {
+    font-size: 8px;
+    top: -10px;
+  }
+
+  .size-note {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .outfit-row {
+    gap: 7px;
+    margin-bottom: 10px;
+  }
+
+  .oi {
+    width: 72px;
+  }
+
+  .oi-img {
+    width: 72px;
+    height: 92px;
+  }
+
+  .oi-this {
+    font-size: 7px;
+    padding: 2px 4px;
+  }
+
+  .oi-nm {
+    font-size: 10px;
+  }
+
+  .oi-pr {
+    font-size: 11px;
+  }
+
+  .buy-bar {
+    padding: 9px 14px 11px;
+  }
+
+  .buy-price-main {
+    font-size: 22px;
+  }
+
+  .buy-price-old {
+    font-size: 11px;
+  }
+
+  .buy-price-badge {
+    font-size: 10px;
+    padding: 0 4px;
+  }
+
+  .buy-bar-inner {
+    height: 34px;
+  }
+
+  .buy-btn {
+    width: 84px;
+    font-size: 11px;
+  }
+
+  .canvas {
+    padding: 12px 14px 10px;
+  }
+
+  .user-bubble {
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+
+  .ar-text {
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .panel {
+    max-height: 62dvh;
+  }
+
+  .panel-hdr {
+    padding: 12px 14px 10px;
+  }
+
+  .panel-title {
+    font-size: 13px;
+  }
+
+  .panel-close {
+    font-size: 12px;
+  }
+
+  .empty-text {
+    font-size: 12px;
+    padding: 18px 14px 20px;
+  }
+
+  .fp-item,
+  .hl-item {
+    gap: 10px;
+    padding: 10px 14px;
+  }
+
+  .fp-thumb {
+    width: 42px;
+    height: 54px;
+  }
+
+  .fp-name,
+  .hl-q {
+    font-size: 12px;
+  }
+
+  .fp-price {
+    font-size: 12px;
+  }
+
+  .fp-time,
+  .hl-time {
+    font-size: 10px;
+  }
+
+  .hl-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .hl-arrow {
+    font-size: 14px;
+  }
+
+  .phone.detail-open .overlay {
+    bottom: calc(152px + env(safe-area-inset-bottom));
+  }
+
+  .phone.detail-open .panel-region {
+    bottom: calc(162px + env(safe-area-inset-bottom));
   }
 }

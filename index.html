@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>JNBY AI 店铺 Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-bg"></div>
+  <div class="demo-shell">
+    <div class="phone" id="phoneApp">
+      <header class="store-header">
+        <div class="brand-logo">JNBY</div>
+        <div class="brand-content">
+          <div class="store-name">JNBY 江南布衣 AI 店铺</div>
+          <div class="store-sub" id="storeSub">欢迎进店，已为你准备本周新品推荐</div>
+        </div>
+      </header>
+
+      <main class="feed-scroll" id="feedScroll">
+        <section class="welcome-card">
+          <div class="welcome-title">欢迎来到品牌智能店铺</div>
+          <p class="welcome-text" id="welcomeText">
+            你好，欢迎进店。我是你的 AI 导购 Anna，结合进店上下文，我先给你整理了新品和高匹配款。
+          </p>
+          <div class="welcome-kpis">
+            <span>新品 28 款</span>
+            <span>高匹配 12 款</span>
+            <span>专属优惠 2 张</span>
+          </div>
+        </section>
+
+        <section class="canvas-stack" id="canvasStack"></section>
+
+        <section class="feed-section">
+          <div class="section-head-row">
+            <h2>沉浸浏览 · 双列商品 Feeds</h2>
+            <span id="feedMeta">持续更新中</span>
+          </div>
+          <div class="feed-grid" id="feedGrid"></div>
+        </section>
+      </main>
+
+      <section class="detail-overlay" id="detailOverlay" aria-hidden="true">
+        <div class="detail-topbar">
+          <button class="ghost-btn" id="detailCloseBtn" type="button">关闭</button>
+          <div class="detail-grabber"></div>
+          <button class="ghost-btn" id="detailAiBtn" type="button">AI 试衣</button>
+        </div>
+        <div class="detail-scroll">
+          <div class="detail-image" id="detailImage">
+            <span id="detailImageLabel">商品图</span>
+          </div>
+          <div class="detail-body">
+            <div class="detail-price-row">
+              <span class="price-main" id="detailPrice">¥0</span>
+              <span class="price-tag" id="detailTag">新品</span>
+            </div>
+            <h3 id="detailName">商品名称</h3>
+            <p class="detail-desc" id="detailDesc"></p>
+
+            <div class="insight-card">
+              <div class="insight-title">用户相关信息</div>
+              <p id="detailInsight">根据你最近浏览和购买记录，推荐你优先看 S 码与卡其色。</p>
+            </div>
+
+            <div class="size-block">
+              <div class="block-title">尺码建议</div>
+              <div class="size-row" id="sizeRow">
+                <span>XS</span><span class="active">S</span><span>M</span><span>L</span>
+              </div>
+            </div>
+
+            <div class="bundle-block">
+              <div class="block-title">搭配建议</div>
+              <div class="bundle-list" id="bundleList"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="buy-bar">
+          <div>
+            <div class="buy-price" id="buyPrice">¥0</div>
+            <div class="buy-sub">支持 7 天无理由</div>
+          </div>
+          <div class="buy-actions">
+            <button class="btn-secondary" type="button">加入购物车</button>
+            <button class="btn-primary" type="button">立即购买</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="history-sheet" id="historySheet" aria-hidden="true">
+        <div class="sheet-head">
+          <span>店内足迹</span>
+          <button id="historyCloseBtn" class="ghost-btn" type="button">收起</button>
+        </div>
+        <div class="sheet-list" id="historyList"></div>
+      </section>
+
+      <footer class="assistant-dock">
+        <div class="intent-strip" id="intentStrip"></div>
+        <div class="input-row">
+          <input id="intentInput" type="text" placeholder="在店内随时提问：找商品、问优惠、要搭配..." autocomplete="off">
+          <button id="sendBtn" class="send-btn" type="button">发送</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

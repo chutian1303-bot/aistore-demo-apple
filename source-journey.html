@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JNBY AI 店铺 · 用户动线全图</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1a1a;--ink-light:#888;--ink-faint:#bbb;
+  --paper:#faf9f6;--warm:#f5f0e8;--warm2:#ede8de;
+  --border:#e8e4dc;--green:#2a7a5a;--orange:#FF5000;
+}
+body{font-family:'Noto Sans SC',sans-serif;background:#dbd7cf;padding:48px 40px 80px}
+
+/* ── Page header ── */
+.ph{margin-bottom:40px}
+.ph h1{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);margin-bottom:6px}
+.ph p{font-size:11px;color:var(--ink-light);line-height:1.7}
+
+/* ── Section ── */
+.section{margin-bottom:56px}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px}
+.sec-num{font-size:10px;font-weight:700;color:var(--ink-faint);letter-spacing:.5px}
+.sec-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink)}
+.sec-sub{font-size:10px;color:var(--ink-light)}
+
+/* ── Row of phones ── */
+.row{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding-bottom:12px}
+.row::-webkit-scrollbar{height:5px}
+.row::-webkit-scrollbar-thumb{background:#ccc;border-radius:3px}
+
+/* ── Phone wrapper ── */
+.pw{flex-shrink:0;display:flex;flex-direction:column;align-items:center;width:280px}
+.pw-label{font-size:10px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:3px}
+.pw-sub{font-size:8.5px;color:var(--ink-light);text-align:center;margin-bottom:10px;line-height:1.4;max-width:240px}
+
+/* ── Arrow ── */
+.arr{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding-top:160px;width:32px;font-size:18px;color:#bbb}
+
+/* ── Phone shell ── */
+.phone{
+  width:260px;height:562px;background:var(--paper);
+  border-radius:34px;border:1px solid #ccc9c0;
+  box-shadow:0 0 0 5px #d8d4cb,0 14px 40px rgba(0,0,0,.15),0 3px 8px rgba(0,0,0,.06);
+  display:flex;flex-direction:column;overflow:hidden;position:relative;
+}
+
+/* ── Shared: status bar ── */
+.sbar{display:flex;justify-content:space-between;align-items:center;padding:9px 18px 3px;font-size:9px;font-weight:600;color:var(--ink);flex-shrink:0;background:var(--paper)}
+
+/* ── Shared: brand bar ── */
+.bbar{background:var(--paper);border-bottom:1px solid var(--border);flex-shrink:0}
+.bbar-inner{display:flex;align-items:center;gap:9px;padding:6px 13px 7px}
+.logo{width:32px;height:32px;flex-shrink:0;background:var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:800;color:#fff;letter-spacing:.4px}
+.btext{flex:1;min-width:0}
+.brow1{display:flex;align-items:baseline;gap:4px;margin-bottom:2px}
+.bname{font-size:10.5px;font-weight:700;color:var(--ink)}
+.bmeta{font-size:7px;color:var(--ink-light);white-space:nowrap;flex-shrink:0}
+.bdot{font-size:7px;color:#d0cbc4;flex-shrink:0}
+.brow2{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;overflow:hidden}
+.btag{font-size:6.5px;font-weight:600;padding:1px 5px;border-radius:6px;border:1px solid var(--border);color:var(--ink-light);background:var(--warm);white-space:nowrap;flex-shrink:0}
+.btag.hi{color:#2a5aa0;border-color:#c0d0e8;background:#eef3fb}
+
+/* ── Shared: feed grid ── */
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden}
+.scroll::-webkit-scrollbar{width:0}
+.feed-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:7px 9px}
+.fi{background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.fi-img{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:7px;color:#bbb;position:relative}
+.fi-body{padding:6px 7px 7px}
+.fi-name{font-size:9px;font-weight:600;line-height:1.3;margin-bottom:2px}
+.fi-tag{font-size:7px;color:var(--green);margin-bottom:2px}
+.fi-price{font-size:10px;font-weight:700}
+.new-badge{position:absolute;top:4px;left:4px;background:var(--ink);color:#fff;font-size:5.5px;font-weight:700;padding:2px 4px;border-radius:2px}
+.presale-badge{position:absolute;top:4px;left:4px;background:#c0392b;color:#fff;font-size:5.5px;font-weight:700;padding:2px 4px;border-radius:2px}
+.viewed-mark{position:absolute;top:4px;right:4px;background:rgba(255,255,255,.88);border-radius:3px;padding:1px 4px;font-size:5.5px;font-weight:700;color:var(--ink-light)}
+.c1{background:#e8e4dc}.c2{background:#d4cfc5}.c3{background:#c9c4b8}
+.c4{background:#dbd5c8}.c5{background:#ccc6bb}.c6{background:#bfb8ac}
+.c7{background:#d6d0c4}.c8{background:#e2ddd4}
+
+/* ── Shared: anna flat message ── */
+.anna-zone{padding:12px 13px 8px}
+.anna-text{font-size:11px;line-height:1.75;color:var(--ink)}
+.anna-text .hi{color:var(--orange);font-weight:600}
+
+/* ── Shared: bottom bar ── */
+.bbot{background:var(--paper);border-top:1px solid var(--border);flex-shrink:0;padding:6px 11px 12px}
+.chips-row{display:flex;gap:4px;overflow-x:auto;margin-bottom:6px;padding-top:5px;overflow-y:visible}
+.chips-row::-webkit-scrollbar{height:0}
+.chip{flex-shrink:0;font-size:8px;font-weight:600;padding:4px 9px;border-radius:12px;border:1px solid var(--border);background:#fff;color:var(--ink);white-space:nowrap;cursor:pointer}
+.chip.foot{background:var(--warm);position:relative}
+.chip.msg{background:var(--warm2)}
+.foot-badge{position:absolute;top:-5px;right:-5px;background:var(--orange);color:#fff;font-size:6px;font-weight:800;min-width:13px;height:13px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;padding:0 2px}
+.input-row{display:flex;align-items:center;gap:6px}
+.input-field{flex:1;background:#fff;border:1px solid var(--border);border-radius:16px;padding:7px 12px;font-size:9px;color:var(--ink-light);font-family:inherit}
+.input-field.active{border-color:var(--ink);color:var(--ink)}
+.input-cursor{width:1.5px;height:10px;background:var(--ink);display:inline-block;animation:blink .9s step-end infinite;margin-left:1px;vertical-align:middle}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.send-btn{width:27px;height:27px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.send-btn svg{width:11px;height:11px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Compact bar (scroll state) ── */
+.compact-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 13px;background:var(--paper);
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.cb-logo{width:26px;height:26px;flex-shrink:0;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:5.5px;font-weight:800;color:#fff}
+.cb-back{width:22px;height:22px;border-radius:50%;background:var(--warm2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink);flex-shrink:0}
+.cb-text{flex:1;min-width:0}
+.cb-name{font-size:10px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.cb-sub{font-size:8px;color:var(--ink-light)}
+
+/* ── Screen 1 specific: scrollable ── */
+.scroll-s1{flex:1;overflow-y:auto;overflow-x:hidden}
+.scroll-s1::-webkit-scrollbar{width:0}
+.bbar-collapsible{background:var(--paper);border-bottom:1px solid var(--border);flex-shrink:0;max-height:70px;overflow:hidden;transition:max-height .32s ease,opacity .28s ease}
+.bbar-collapsible.hidden{max-height:0;opacity:0}
+.sbar-collapsible{display:flex;justify-content:space-between;align-items:center;padding:9px 18px 3px;font-size:9px;font-weight:600;color:var(--ink);flex-shrink:0;background:var(--paper);max-height:36px;overflow:hidden;transition:max-height .32s ease,opacity .28s ease,padding .32s ease}
+.sbar-collapsible.hidden{max-height:0;opacity:0;padding-top:0;padding-bottom:0}
+.compact-s1{display:flex;align-items:center;gap:8px;padding:0 13px;background:var(--paper);border-bottom:1px solid var(--border);flex-shrink:0;max-height:0;overflow:hidden;opacity:0;transition:max-height .32s ease,opacity .28s ease,padding .32s ease}
+.compact-s1.visible{max-height:80px;opacity:1;padding:9px 13px}
+.bbot-collapsible{background:var(--paper);border-top:1px solid var(--border);flex-shrink:0;overflow:hidden;max-height:110px;transition:max-height .32s ease,opacity .28s ease}
+.bbot-collapsible.hidden{max-height:0;opacity:0}
+
+/* ── Detail overlay ── */
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.3);z-index:10;pointer-events:none}
+.overlay{position:absolute;left:0;right:0;top:80px;bottom:78px;background:var(--paper);border-radius:14px 14px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.12);display:flex;flex-direction:column;z-index:20;overflow:hidden}
+.ov-top{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 4px;flex-shrink:0}
+.ov-handle{width:24px;height:2px;background:#ddd;border-radius:2px}
+.ov-back{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink)}
+.ov-scroll{flex:1;overflow-y:auto}
+.ov-scroll::-webkit-scrollbar{width:0}
+.prod-img{width:100%;height:220px;background:#e0dbd2;display:flex;align-items:center;justify-content:center;font-size:8px;color:#bbb;position:relative}
+.tryon-btn{position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,.92);border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:3px 9px;font-size:7px;font-weight:700;color:var(--ink)}
+.img-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:3px}
+.dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.45)}
+.dot.on{background:#fff;width:10px;border-radius:2px}
+.ov-body{padding:10px 12px 0}
+.price-row{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
+.price-main{font-size:18px;font-weight:700}
+.price-old{font-size:9px;color:var(--ink-faint);text-decoration:line-through}
+.price-badge{font-size:7px;font-weight:700;color:var(--orange);border:1px solid var(--orange);border-radius:3px;padding:0 4px}
+.prod-name{font-size:11px;font-weight:700;margin-bottom:3px}
+.prod-meta{font-size:7.5px;color:var(--ink-light);margin-bottom:8px}
+.anna-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:7px 9px;margin-bottom:8px}
+.ac-h{display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.ac-ava{width:16px;height:16px;border-radius:50%;background:var(--warm2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:4.5px;color:var(--ink-light);flex-shrink:0}
+.ac-nm{font-size:8px;font-weight:700}
+.ac-lb{font-size:7px;color:var(--ink-light);margin-left:auto}
+.ac-rec{font-size:8px;line-height:1.6;color:var(--ink)}
+.ac-hi{color:var(--orange);font-weight:600}
+.sec-t{font-size:8px;font-weight:700;display:flex;align-items:center;gap:3px;margin-bottom:5px}
+.sec-t::before{content:'';width:2px;height:9px;background:var(--ink);border-radius:1px;display:inline-block}
+.size-row{display:flex;gap:3px;margin-bottom:4px}
+.sz{font-size:8px;font-weight:600;padding:3px 9px;border-radius:5px;border:1px solid var(--border);color:var(--ink-light);background:#fff}
+.sz.rec{border-color:var(--ink);color:var(--ink);position:relative}
+.sz.rec::after{content:'推荐';position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-size:5.5px;font-weight:700;color:var(--orange);background:var(--paper);padding:0 2px;white-space:nowrap}
+.size-note{font-size:7.5px;color:var(--ink-light);line-height:1.5;margin-bottom:8px}
+.outfit-row{display:flex;gap:5px;overflow-x:auto;margin-bottom:8px}
+.outfit-row::-webkit-scrollbar{height:0}
+.oi{flex-shrink:0;width:52px}
+.oi-img{width:52px;height:65px;border-radius:6px;background:var(--warm2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:5.5px;color:#bbb;margin-bottom:3px;position:relative}
+.oi-this{position:absolute;top:2px;left:2px;font-size:5px;font-weight:700;color:#fff;background:var(--ink);padding:1px 3px;border-radius:2px}
+.oi-nm{font-size:7px;font-weight:600;line-height:1.2;margin-bottom:1px}
+.oi-pr{font-size:7.5px;font-weight:700}
+.buy-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:7px 12px 9px;border-top:1px solid var(--border);flex-shrink:0;background:var(--paper);
+}
+.buy-price{display:flex;flex-direction:column;gap:1px}
+.buy-price-main{font-size:15px;font-weight:700;color:var(--ink);line-height:1}
+.buy-price-sub{display:flex;align-items:center;gap:4px;margin-top:2px}
+.buy-price-old{font-size:8px;color:var(--ink-faint);text-decoration:line-through}
+.buy-price-badge{font-size:7px;font-weight:700;color:var(--orange);border:1px solid var(--orange);border-radius:3px;padding:0 3px;line-height:1.4}
+.buy-bar-inner{display:flex;border-radius:8px;overflow:hidden;height:28px;flex-shrink:0}
+.buy-btn{width:68px;padding:0;border:none;font-size:8px;font-weight:700;font-family:inherit;cursor:pointer;color:#fff}
+.buy-btn.add{background:#FFB400}
+.buy-btn.now{background:#FF5000}
+.buy-wrap{display:none}
+
+/* ── Canvas (user msg + anna reply) ── */
+.canvas{flex:1;overflow-y:auto;overflow-x:hidden;padding:10px 12px 6px}
+.canvas::-webkit-scrollbar{width:0}
+.user-row{display:flex;justify-content:flex-end;margin-bottom:10px}
+.user-bubble{background:var(--ink);color:#fff;border-radius:12px 12px 3px 12px;padding:7px 10px;font-size:9px;line-height:1.5;max-width:78%}
+.ar-text{font-size:9.5px;line-height:1.7;color:var(--ink);margin-bottom:8px}
+.reply-sub{padding:5px 13px 6px;font-size:9px;color:var(--ink-light);flex-shrink:0;background:var(--paper)}
+
+/* ── History / Footprint panel ── */
+.panel-region{position:absolute;left:0;right:0;bottom:0;z-index:30;display:flex;flex-direction:column;background:var(--paper)}
+.panel{border-top:1px solid var(--border);border-radius:12px 12px 0 0;overflow:hidden;background:var(--paper)}
+.panel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 8px;border-bottom:1px solid var(--border)}
+.panel-title{font-size:10px;font-weight:700;color:var(--ink)}
+.panel-count{font-size:8px;color:var(--ink-faint)}
+.hl-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border);cursor:pointer}
+.hl-item:last-child{border-bottom:none}
+.hl-left{flex:1;min-width:0}
+.hl-q{font-size:9px;font-weight:500;color:var(--ink);line-height:1.4;margin-bottom:2px}
+.hl-meta{display:flex;align-items:center;gap:4px}
+.hl-time{font-size:7px;color:var(--ink-faint)}
+.hl-tag{font-size:7px;font-weight:600;padding:1px 5px;border-radius:6px;background:var(--warm);border:1px solid var(--border);color:var(--ink-light)}
+.hl-tag.result{color:var(--green);background:#eef7f3;border-color:#c0ddd0}
+.hl-arrow{font-size:12px;color:var(--ink-faint)}
+.fp-item{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--border)}
+.fp-item:last-child{border-bottom:none}
+.fp-thumb{width:34px;height:44px;border-radius:6px;background:var(--warm2);border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:5px;color:#bbb}
+.fp-info{flex:1}
+.fp-name{font-size:9px;font-weight:600;margin-bottom:2px}
+.fp-price{font-size:9px;font-weight:700}
+.fp-time{font-size:6.5px;color:var(--ink-faint);margin-top:1px}
+
+/* ── Pin screen (anchored message) ── */
+.pinned-row{display:flex;justify-content:flex-end;margin-bottom:10px;position:relative}
+.pin-label{position:absolute;left:0;top:50%;transform:translateY(-50%);font-size:7px;color:var(--orange);font-weight:700;display:flex;align-items:center;gap:2px}
+.pinned-bubble{background:var(--ink);color:#fff;border-radius:12px 12px 3px 12px;padding:7px 10px;font-size:9px;line-height:1.5;max-width:78%;outline:2px solid var(--orange);outline-offset:2px}
+
+/* Divider between sections */
+.divider{height:1px;background:rgba(0,0,0,.08);margin:0 0 56px}
+</style>
+</head>
+<body>
+
+<div class="ph">
+  <h1>JNBY AI 店铺 · 用户动线</h1>
+  <p>进店 → 浏览商品 → 查看详情 → 返回 → 意图提问 → 足迹与历史</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 01 进店首屏                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="sec-num">01</span>
+    <span class="sec-title">进店首屏</span>
+    <span class="sec-sub">anna 欢迎消息 + 新品 feeds · 上滑时店招收起显示摘要</span>
+  </div>
+  <div class="row">
+
+    <!-- 1A: 默认态 -->
+    <div class="pw">
+      <div class="pw-label">默认进店</div>
+      <div class="pw-sub">店招 + anna 欢迎语 + 新品 feeds</div>
+      <div class="phone">
+        <div class="sbar-collapsible" id="s1-sbar"><span>10:32</span><span>5G ▌▌</span></div>
+        <div class="compact-s1" id="s1-compact">
+          <div class="cb-logo">JNBY</div>
+          <div class="cb-text">
+            <div class="cb-name">JNBY 江南布衣旗舰店</div>
+            <div class="cb-sub">anna 已为你整理好了 28 款新品</div>
+          </div>
+        </div>
+        <div class="bbar-collapsible" id="s1-bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-s1" id="s1-scroll">
+          <div class="anna-zone">
+            <div class="anna-text">hi 王同学，欢迎进店，我是你的专属店铺导购 anna。本店最近上新了 <span class="hi">28 款新品</span>，结合你平时的穿衣风格，已经为你整理好了。</div>
+          </div>
+          <div class="feed-grid">
+            <div class="fi"><div class="fi-img c1"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-tag">→ 和你风格匹配</div><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c3"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">不规则下摆连衣裙</div><div class="fi-price">¥1,980</div></div></div>
+            <div class="fi"><div class="fi-img c2"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-tag">→ 近期热销</div><div class="fi-name">LESS 春季薄风衣</div><div class="fi-price">¥1,380</div></div></div>
+            <div class="fi"><div class="fi-img c5"><div class="presale-badge">预售</div></div><div class="fi-body"><div class="fi-name">天丝衬衫连衣裙</div><div class="fi-price">¥1,480</div></div></div>
+            <div class="fi"><div class="fi-img c4"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">宽松针织开衫</div><div class="fi-price">¥1,280</div></div></div>
+            <div class="fi"><div class="fi-img c6"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">高腰亚麻阔腿裤</div><div class="fi-price">¥1,080</div></div></div>
+            <div class="fi"><div class="fi-img c7"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">拼接设计印花T恤</div><div class="fi-price">¥580</div></div></div>
+            <div class="fi"><div class="fi-img c8"><div class="presale-badge">预售</div></div><div class="fi-body"><div class="fi-name">褶皱肌理半裙</div><div class="fi-price">¥980</div></div></div>
+          </div>
+        </div>
+        <div class="bbot-collapsible" id="s1-bbot">
+          <div style="padding:6px 11px 12px">
+            <div class="chips-row">
+              <div class="chip foot">👣 商品足迹</div>
+              <div class="chip msg">💬 历史消息</div>
+              <div class="chip">找优惠券</div>
+              <div class="chip">穿搭推荐</div>
+              <div class="chip">AI 试衣</div>
+            </div>
+            <div class="input-row">
+              <div class="input-field">anna 在线，可以问我任何问题</div>
+              <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arr">→</div>
+
+    <!-- 1B: 上滑态 -->
+    <div class="pw">
+      <div class="pw-label">上滑浏览</div>
+      <div class="pw-sub">店招与输入框收起，摘要吸顶</div>
+      <div class="phone">
+        <div class="compact-bar">
+          <div class="cb-logo">JNBY</div>
+          <div class="cb-text">
+            <div class="cb-name">JNBY 江南布衣旗舰店</div>
+            <div class="cb-sub">anna 已为你整理好了 28 款新品</div>
+          </div>
+        </div>
+        <div class="scroll">
+          <div class="feed-grid">
+            <div class="fi"><div class="fi-img c1"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-tag">→ 和你风格匹配</div><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c3"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">不规则下摆连衣裙</div><div class="fi-price">¥1,980</div></div></div>
+            <div class="fi"><div class="fi-img c2"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-tag">→ 近期热销</div><div class="fi-name">LESS 春季薄风衣</div><div class="fi-price">¥1,380</div></div></div>
+            <div class="fi"><div class="fi-img c5"><div class="presale-badge">预售</div></div><div class="fi-body"><div class="fi-name">天丝衬衫连衣裙</div><div class="fi-price">¥1,480</div></div></div>
+            <div class="fi"><div class="fi-img c4"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">宽松针织开衫</div><div class="fi-price">¥1,280</div></div></div>
+            <div class="fi"><div class="fi-img c6"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">高腰亚麻阔腿裤</div><div class="fi-price">¥1,080</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 02 商品详情浮层                          -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="sec-num">02</span>
+    <span class="sec-title">商品详情浮层</span>
+    <span class="sec-sub">点击商品升起浮层 · anna 推荐理由 + 尺码 + 搭配</span>
+  </div>
+  <div class="row">
+    <div class="pw">
+      <div class="pw-label">详情浮层</div>
+      <div class="pw-sub">feeds 在后，浮层遮盖约 80% 高度</div>
+      <div class="phone">
+        <div class="sbar"><span>10:38</span><span>5G ▌▌</span></div>
+        <div class="bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:1;overflow:hidden;filter:brightness(.75);pointer-events:none">
+          <div class="feed-grid">
+            <div class="fi"><div class="fi-img c1"></div><div class="fi-body"><div class="fi-name">亚麻解构西装</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c2"></div><div class="fi-body"><div class="fi-name">LESS 立领短夹克</div><div class="fi-price">¥1,680</div></div></div>
+            <div class="fi"><div class="fi-img c3"></div><div class="fi-body"><div class="fi-name">不规则连衣裙</div><div class="fi-price">¥1,980</div></div></div>
+          </div>
+        </div>
+        <div class="scrim"></div>
+        <div class="overlay">
+          <div class="ov-top"><div class="ov-back">←</div><div class="ov-handle"></div><div style="width:22px"></div></div>
+          <div class="ov-scroll">
+            <div class="prod-img c2"><span>商品图片</span><div class="img-dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div><div class="tryon-btn">✦ AI 试衣</div></div>
+            <div class="ov-body">
+              <div class="prod-name" style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">LESS 立领短夹克 <span style="font-size:8px;font-weight:400;color:var(--ink-light)">100%棉 · 立领廓形 · 黑/米白/卡其</span></div>
+              <div class="anna-card">
+                <div class="ac-h"><div class="ac-ava">头像</div><span class="ac-nm">anna 说</span><span class="ac-lb">专属推荐</span></div>
+                <div class="ac-rec">你偏好<span class="ac-hi">宽松廓形</span>，这件立领修身一点，<span class="ac-hi">通勤约会都能穿</span>，卡其最百搭。</div>
+              </div>
+              <div class="sec-t">尺码推荐</div>
+              <div class="size-row"><div class="sz">XS</div><div class="sz rec">S</div><div class="sz">M</div><div class="sz">L</div></div>
+              <div class="size-note">根据历史购买记录，建议选 S 码。</div>
+              <div class="sec-t">搭配建议</div>
+              <div class="outfit-row">
+                <div class="oi"><div class="oi-img c2"><div class="oi-this">本款</div></div><div class="oi-nm">立领短夹克</div><div class="oi-pr">¥1,680</div></div>
+                <div class="oi"><div class="oi-img c3"></div><div class="oi-nm">锥形九分裤</div><div class="oi-pr">¥980</div></div>
+                <div class="oi"><div class="oi-img c1"></div><div class="oi-nm">直筒牛仔裤</div><div class="oi-pr">¥880</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="buy-bar">
+            <div class="buy-price">
+              <span class="buy-price-main">¥1,680</span>
+              <div class="buy-price-sub">
+                <span class="buy-price-old">¥2,100</span>
+                <span class="buy-price-badge">8折</span>
+              </div>
+            </div>
+            <div class="buy-bar-inner">
+              <button class="buy-btn add">加入购物车</button>
+              <button class="buy-btn now">立即购买</button>
+            </div>
+          </div>
+        </div>
+        <div class="bbot" style="position:absolute;bottom:0;left:0;right:0;z-index:30">
+          <div class="chips-row">
+            <div class="chip foot">👣 商品足迹</div>
+            <div class="chip msg">💬 历史消息</div>
+            <div class="chip">尺码推荐</div>
+            <div class="chip">搭配</div>
+            <div class="chip">怎么买便宜</div>
+          </div>
+          <div class="input-row">
+            <div class="input-field">anna 在线，可以问我任何问题</div>
+            <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 03 返回首页                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="sec-num">03</span>
+    <span class="sec-title">关闭详情 · 返回首页</span>
+    <span class="sec-sub">商品足迹角标 +1 · 已看商品标记</span>
+  </div>
+  <div class="row">
+    <div class="pw">
+      <div class="pw-label">返回 feeds</div>
+      <div class="pw-sub">足迹角标出现，输入框预填意图建议</div>
+      <div class="phone">
+        <div class="sbar"><span>10:41</span><span>5G ▌▌</span></div>
+        <div class="bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="reply-sub">anna 已为你整理好了 28 款新品</div>
+        <div class="scroll">
+          <div class="feed-grid">
+            <div class="fi"><div class="fi-img c1"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-tag">→ 和你风格匹配</div><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c2"><div class="viewed-mark">已看过</div></div><div class="fi-body"><div class="fi-tag" style="color:var(--ink-faint)">→ 刚刚浏览</div><div class="fi-name">LESS 立领短夹克</div><div class="fi-price">¥1,680</div></div></div>
+            <div class="fi"><div class="fi-img c3"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">不规则下摆连衣裙</div><div class="fi-price">¥1,980</div></div></div>
+            <div class="fi"><div class="fi-img c4"></div><div class="fi-body"><div class="fi-name">宽松针织开衫</div><div class="fi-price">¥1,280</div></div></div>
+            <div class="fi"><div class="fi-img c5"></div><div class="fi-body"><div class="fi-name">LESS 春季薄风衣</div><div class="fi-price">¥1,380</div></div></div>
+            <div class="fi"><div class="fi-img c6"></div><div class="fi-body"><div class="fi-name">天丝衬衫连衣裙</div><div class="fi-price">¥1,480</div></div></div>
+          </div>
+        </div>
+        <div class="bbot">
+          <div class="chips-row">
+            <div class="chip foot">👣 商品足迹<span class="foot-badge">1</span></div>
+            <div class="chip msg">💬 历史消息</div>
+            <div class="chip">找优惠券</div>
+            <div class="chip">穿搭推荐</div>
+            <div class="chip">AI 试衣</div>
+          </div>
+          <div class="input-row">
+            <div class="input-field active">找下同风格的外套</div>
+            <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 04 意图提问                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="sec-num">04</span>
+    <span class="sec-title">意图提问</span>
+    <span class="sec-sub">用户输入问题 → anna 文字+feeds 回复 → 上滑浏览</span>
+  </div>
+  <div class="row">
+
+    <!-- 4A 输入中 -->
+    <div class="pw">
+      <div class="pw-label">04-A 输入中</div>
+      <div class="pw-sub">输入框激活，feeds 轻微退后</div>
+      <div class="phone">
+        <div class="sbar"><span>10:44</span><span>5G ▌▌</span></div>
+        <div class="bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll">
+          <div class="anna-zone">
+            <div class="anna-text">hi 王同学，欢迎进店，我是你的专属店铺导购 anna。本店最近上新了 <span class="hi">28 款新品</span>，结合你平时的穿衣风格，已经为你整理好了。</div>
+          </div>
+          <div class="feed-grid" style="opacity:.4">
+            <div class="fi"><div class="fi-img c1"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c3"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">不规则下摆连衣裙</div><div class="fi-price">¥1,980</div></div></div>
+            <div class="fi"><div class="fi-img c2"></div><div class="fi-body"><div class="fi-name">LESS 春季薄风衣</div><div class="fi-price">¥1,380</div></div></div>
+            <div class="fi"><div class="fi-img c4"></div><div class="fi-body"><div class="fi-name">宽松针织开衫</div><div class="fi-price">¥1,280</div></div></div>
+          </div>
+        </div>
+        <div class="bbot">
+          <div class="chips-row">
+            <div class="chip foot">👣 商品足迹<span class="foot-badge">1</span></div>
+            <div class="chip msg">💬 历史消息</div>
+            <div class="chip">找优惠券</div>
+            <div class="chip">穿搭推荐</div>
+            <div class="chip">AI 试衣</div>
+          </div>
+          <div class="input-row">
+            <div class="input-field active">给我推荐同款风衣<span class="input-cursor"></span></div>
+            <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arr">→</div>
+
+    <!-- 4B anna 回复 -->
+    <div class="pw">
+      <div class="pw-label">04-B anna 回复</div>
+      <div class="pw-sub">用户问题在右，文字+feeds 在下</div>
+      <div class="phone">
+        <div class="sbar"><span>10:44</span><span>5G ▌▌</span></div>
+        <div class="bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="reply-sub" id="s4b-sub" style="display:none">同风格的风衣 5款</div>
+        <div class="canvas" id="s4b-canvas">
+          <div class="user-row"><div class="user-bubble">给我推荐同款风衣</div></div>
+          <div class="ar-text" id="s4b-text">给你找到了 5 件同风格的风衣，都是立领或廓形剪裁，和你买过的 LESS 系列很搭 👇</div>
+          <div class="feed-grid" style="padding:0 0 8px">
+            <div class="fi"><div class="fi-img c1"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-tag">→ 最接近你看的款</div><div class="fi-name">LESS 廓形短外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c3"></div><div class="fi-body"><div class="fi-tag">→ 同系列</div><div class="fi-name">LESS 春季薄风衣</div><div class="fi-price">¥1,380</div></div></div>
+            <div class="fi"><div class="fi-img c2"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,480</div></div></div>
+            <div class="fi"><div class="fi-img c5"></div><div class="fi-body"><div class="fi-name">棉麻衬衫式外套</div><div class="fi-price">¥880</div></div></div>
+          </div>
+        </div>
+        <div class="bbot">
+          <div class="chips-row">
+            <div class="chip foot">👣 商品足迹<span class="foot-badge">1</span></div>
+            <div class="chip msg">💬 历史消息</div>
+            <div class="chip">找优惠券</div>
+            <div class="chip">穿搭推荐</div>
+            <div class="chip">AI 试衣</div>
+          </div>
+          <div class="input-row">
+            <div class="input-field">anna 在线，可以问我任何问题</div>
+            <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arr">→</div>
+
+    <!-- 4C 上滑浏览 -->
+    <div class="pw">
+      <div class="pw-label">04-C 上滑浏览</div>
+      <div class="pw-sub">文字回复折叠为店招副标题</div>
+      <div class="phone">
+        <div class="sbar"><span>10:45</span><span>5G ▌▌</span></div>
+        <div class="bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="reply-sub">同风格的风衣 5款</div>
+        <div class="scroll">
+          <div class="feed-grid">
+            <div class="fi"><div class="fi-img c1"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-tag">→ 最接近你看的款</div><div class="fi-name">LESS 廓形短外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c3"></div><div class="fi-body"><div class="fi-tag">→ 同系列</div><div class="fi-name">LESS 春季薄风衣</div><div class="fi-price">¥1,380</div></div></div>
+            <div class="fi"><div class="fi-img c2"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,480</div></div></div>
+            <div class="fi"><div class="fi-img c5"></div><div class="fi-body"><div class="fi-name">棉麻衬衫式外套</div><div class="fi-price">¥880</div></div></div>
+            <div class="fi"><div class="fi-img c4"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">宽松针织开衫外套</div><div class="fi-price">¥1,180</div></div></div>
+            <div class="fi"><div class="fi-img c6"></div><div class="fi-body"><div class="fi-name">轻薄廓形风衣</div><div class="fi-price">¥1,080</div></div></div>
+          </div>
+        </div>
+        <div class="bbot">
+          <div class="chips-row">
+            <div class="chip foot">👣 商品足迹<span class="foot-badge">1</span></div>
+            <div class="chip msg">💬 历史消息</div>
+            <div class="chip">找优惠券</div>
+            <div class="chip">穿搭推荐</div>
+            <div class="chip">AI 试衣</div>
+          </div>
+          <div class="input-row">
+            <div class="input-field">anna 在线，可以问我任何问题</div>
+            <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 05 商品足迹 & 历史消息                   -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="sec-num">05</span>
+    <span class="sec-title">商品足迹 & 历史消息</span>
+    <span class="sec-sub">点击底部入口展开，从底部向上延伸 · 选中历史消息铆钉到回复</span>
+  </div>
+  <div class="row">
+
+    <!-- 5A 商品足迹 -->
+    <div class="pw">
+      <div class="pw-label">商品足迹</div>
+      <div class="pw-sub">看过的商品列表，点击重新打开详情</div>
+      <div class="phone">
+        <div class="sbar"><span>10:46</span><span>5G ▌▌</span></div>
+        <div class="bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:1;overflow:hidden;pointer-events:none;filter:brightness(.82)">
+          <div class="feed-grid">
+            <div class="fi"><div class="fi-img c1"></div><div class="fi-body"><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c2"></div><div class="fi-body"><div class="fi-name">LESS 立领短夹克</div><div class="fi-price">¥1,680</div></div></div>
+            <div class="fi"><div class="fi-img c3"></div><div class="fi-body"><div class="fi-name">不规则下摆连衣裙</div><div class="fi-price">¥1,980</div></div></div>
+            <div class="fi"><div class="fi-img c4"></div><div class="fi-body"><div class="fi-name">宽松针织开衫</div><div class="fi-price">¥1,280</div></div></div>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;top:0;bottom:0;background:rgba(0,0,0,.2);z-index:10;pointer-events:none"></div>
+        <div class="panel-region">
+          <div class="panel">
+            <div class="panel-hdr"><span class="panel-title">商品足迹</span><span class="panel-count">最近浏览 3 件</span></div>
+            <div class="fp-item"><div class="fp-thumb c2"></div><div class="fp-info"><div class="fp-name">LESS 立领短夹克</div><div class="fp-price">¥1,680</div><div class="fp-time">10:38 浏览</div></div><div class="hl-arrow">›</div></div>
+            <div class="fp-item"><div class="fp-thumb c1"></div><div class="fp-info"><div class="fp-name">亚麻解构西装外套</div><div class="fp-price">¥1,580</div><div class="fp-time">10:33 浏览</div></div><div class="hl-arrow">›</div></div>
+            <div class="fp-item"><div class="fp-thumb c4"></div><div class="fp-info"><div class="fp-name">宽松针织开衫 燕麦色</div><div class="fp-price">¥1,280</div><div class="fp-time">10:30 浏览</div></div><div class="hl-arrow">›</div></div>
+          </div>
+          <div class="bbot">
+            <div class="chips-row">
+              <div class="chip foot">👣 商品足迹<span class="foot-badge">3</span></div>
+              <div class="chip msg">💬 历史消息</div>
+              <div class="chip">找优惠券</div>
+              <div class="chip">穿搭推荐</div>
+            </div>
+            <div class="input-row">
+              <div class="input-field">anna 在线，可以问我任何问题</div>
+              <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arr">→</div>
+
+    <!-- 5B 历史消息 -->
+    <div class="pw">
+      <div class="pw-label">历史消息</div>
+      <div class="pw-sub">用户问过的问题列表，点击跳回对应推荐</div>
+      <div class="phone">
+        <div class="sbar"><span>10:46</span><span>5G ▌▌</span></div>
+        <div class="bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:1;overflow:hidden;pointer-events:none;filter:brightness(.82)">
+          <div class="feed-grid">
+            <div class="fi"><div class="fi-img c1"></div><div class="fi-body"><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c2"></div><div class="fi-body"><div class="fi-name">LESS 立领短夹克</div><div class="fi-price">¥1,680</div></div></div>
+            <div class="fi"><div class="fi-img c3"></div><div class="fi-body"><div class="fi-name">不规则下摆连衣裙</div><div class="fi-price">¥1,980</div></div></div>
+            <div class="fi"><div class="fi-img c4"></div><div class="fi-body"><div class="fi-name">宽松针织开衫</div><div class="fi-price">¥1,280</div></div></div>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;top:0;bottom:0;background:rgba(0,0,0,.2);z-index:10;pointer-events:none"></div>
+        <div class="panel-region">
+          <div class="panel">
+            <div class="panel-hdr"><span class="panel-title">历史消息</span><span class="panel-count">共 4 条</span></div>
+            <div class="hl-item"><div class="hl-left"><div class="hl-q">给我推荐同款风衣</div><div class="hl-meta"><span class="hl-time">10:43</span><span class="hl-tag result">推荐了 5 个商品</span></div></div><div class="hl-arrow">›</div></div>
+            <div class="hl-item"><div class="hl-left"><div class="hl-q">有没有适合通勤的外套，不要太正式</div><div class="hl-meta"><span class="hl-time">10:36</span><span class="hl-tag result">推荐了 3 个商品</span></div></div><div class="hl-arrow">›</div></div>
+            <div class="hl-item"><div class="hl-left"><div class="hl-q">这件夹克推荐什么尺码</div><div class="hl-meta"><span class="hl-time">10:39</span><span class="hl-tag">anna 已回复</span></div></div><div class="hl-arrow">›</div></div>
+            <div class="hl-item"><div class="hl-left"><div class="hl-q">有没有 1000 以内的新款</div><div class="hl-meta"><span class="hl-time">10:34</span><span class="hl-tag result">推荐了 4 个商品</span></div></div><div class="hl-arrow">›</div></div>
+          </div>
+          <div class="bbot">
+            <div class="chips-row">
+              <div class="chip foot">👣 商品足迹<span class="foot-badge">3</span></div>
+              <div class="chip msg">💬 历史消息</div>
+              <div class="chip">找优惠券</div>
+              <div class="chip">穿搭推荐</div>
+            </div>
+            <div class="input-row">
+              <div class="input-field">anna 在线，可以问我任何问题</div>
+              <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arr">→</div>
+
+    <!-- 5C 铆钉历史消息 -->
+    <div class="pw">
+      <div class="pw-label">铆钉到历史回复</div>
+      <div class="pw-sub">点击历史消息，canvas 中高亮锚定该问题及 anna 回复</div>
+      <div class="phone">
+        <div class="sbar"><span>10:47</span><span>5G ▌▌</span></div>
+        <div class="bbar">
+          <div class="bbar-inner">
+            <div class="logo">JNBY</div>
+            <div class="btext">
+              <div class="brow1"><span class="bname">JNBY 江南布衣旗舰店</span><span class="bdot">·</span><span class="bmeta">⭐4.8</span><span class="bdot">·</span><span class="bmeta">62.3万粉丝</span></div>
+              <div class="brow2"><span class="btag hi">官方旗舰店</span><span class="btag">品牌设计师</span><span class="btag">白领精选</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="canvas">
+          <!-- Anchored user message -->
+          <div class="user-row">
+            <div class="user-bubble">给我推荐同款风衣</div>
+          </div>
+          <!-- Anna reply -->
+          <div class="ar-text">给你找到了 5 件同风格的风衣，都是立领或廓形剪裁，和你买过的 LESS 系列很搭 👇</div>
+          <div class="feed-grid" style="padding:0 0 8px">
+            <div class="fi"><div class="fi-img c1"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-tag">→ 最接近你看的款</div><div class="fi-name">LESS 廓形短外套</div><div class="fi-price">¥1,580</div></div></div>
+            <div class="fi"><div class="fi-img c3"></div><div class="fi-body"><div class="fi-tag">→ 同系列</div><div class="fi-name">LESS 春季薄风衣</div><div class="fi-price">¥1,380</div></div></div>
+            <div class="fi"><div class="fi-img c2"><div class="new-badge">NEW</div></div><div class="fi-body"><div class="fi-name">亚麻解构西装外套</div><div class="fi-price">¥1,480</div></div></div>
+            <div class="fi"><div class="fi-img c5"></div><div class="fi-body"><div class="fi-name">棉麻衬衫式外套</div><div class="fi-price">¥880</div></div></div>
+          </div>
+        </div>
+        <div class="bbot">
+          <div class="chips-row">
+            <div class="chip foot">👣 商品足迹<span class="foot-badge">3</span></div>
+            <div class="chip msg">💬 历史消息</div>
+            <div class="chip">找优惠券</div>
+            <div class="chip">穿搭推荐</div>
+          </div>
+          <div class="input-row">
+            <div class="input-field">anna 在线，可以问我任何问题</div>
+            <div class="send-btn"><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Section 01 scroll interaction
+const s1scroll = document.getElementById('s1-scroll');
+const s1sbar = document.getElementById('s1-sbar');
+const s1bbar = document.getElementById('s1-bbar');
+const s1bbot = document.getElementById('s1-bbot');
+const s1compact = document.getElementById('s1-compact');
+let lastY=0,timer=null,hidden=false;
+function hide(){if(hidden)return;hidden=true;s1sbar.classList.add('hidden');s1bbar.classList.add('hidden');s1bbot.classList.add('hidden');s1compact.classList.add('visible')}
+function show(){if(!hidden)return;hidden=false;s1sbar.classList.remove('hidden');s1bbar.classList.remove('hidden');s1bbot.classList.remove('hidden');s1compact.classList.remove('visible')}
+s1scroll.addEventListener('scroll',()=>{
+  const y=s1scroll.scrollTop;
+  if(y<=30){show();lastY=y;return;}
+  if(Math.abs(y-lastY)>3)hide();
+  lastY=y;
+  clearTimeout(timer);
+  timer=setTimeout(show,900);
+});
+
+// Section 04-B canvas scroll → show reply-sub
+const s4bCanvas = document.getElementById('s4b-canvas');
+const s4bSub = document.getElementById('s4b-sub');
+const s4bText = document.getElementById('s4b-text');
+if (s4bCanvas) {
+  s4bCanvas.addEventListener('scroll', () => {
+    if (s4bCanvas.scrollTop > 40) {
+      s4bSub.style.display = 'block';
+      s4bText.style.display = 'none';
+    } else {
+      s4bSub.style.display = 'none';
+      s4bText.style.display = 'block';
+    }
+  });
+}
+</script>
+</body>
+</html>

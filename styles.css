@@ -34,6 +34,7 @@ body {
 }
 
 .phone {
+  --detail-dock-height: 128px;
   width: min(430px, 100vw - 16px);
   height: min(860px, calc(100dvh - 16px));
   background: var(--paper);
@@ -55,7 +56,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: calc(9px + env(safe-area-inset-top)) 18px 4px;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--ink);
   background: var(--paper);
@@ -102,7 +103,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 10.5px;
   font-weight: 800;
   color: #fff;
   letter-spacing: 0.4px;
@@ -122,18 +123,18 @@ body {
 }
 
 .bname {
-  font-size: 22px;
+  font-size: 16.5px;
   font-weight: 700;
   color: var(--ink);
 }
 
 .bdot {
-  font-size: 14px;
+  font-size: 10.5px;
   color: #d0cbc4;
 }
 
 .bmeta {
-  font-size: 16px;
+  font-size: 12px;
   color: var(--ink-light);
 }
 
@@ -146,7 +147,7 @@ body {
 }
 
 .btag {
-  font-size: 14px;
+  font-size: 10.5px;
   font-weight: 600;
   padding: 1px 5px;
   border-radius: 6px;
@@ -190,7 +191,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 800;
   color: #fff;
 }
@@ -201,21 +202,21 @@ body {
 }
 
 .cb-name {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--ink);
   margin-bottom: 2px;
 }
 
 .cb-sub {
-  font-size: 16px;
+  font-size: 12px;
   color: var(--ink-light);
 }
 
 .reply-sub {
   display: none;
   padding: 6px 13px;
-  font-size: 18px;
+  font-size: 13.5px;
   color: var(--ink-light);
   border-bottom: 1px solid var(--border);
   background: var(--paper);
@@ -254,7 +255,7 @@ body {
 }
 
 .anna-text {
-  font-size: 22px;
+  font-size: 16.5px;
   line-height: 1.75;
   color: var(--ink);
 }
@@ -286,7 +287,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 10.5px;
   color: #bbb;
   position: relative;
   background: #efebe3;
@@ -305,14 +306,14 @@ body {
 
 .fi-tag {
   min-height: 11px;
-  font-size: 14px;
+  font-size: 10.5px;
   color: var(--green);
   margin-bottom: 2px;
   line-height: 1.2;
 }
 
 .fi-name {
-  font-size: 18px;
+  font-size: 13.5px;
   font-weight: 600;
   line-height: 1.3;
   margin-bottom: 2px;
@@ -324,7 +325,7 @@ body {
 }
 
 .fi-price {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -334,7 +335,7 @@ body {
   top: 4px;
   left: 4px;
   color: #fff;
-  font-size: 11px;
+  font-size: 8.25px;
   font-weight: 700;
   padding: 2px 4px;
   border-radius: 2px;
@@ -355,7 +356,7 @@ body {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 3px;
   padding: 1px 4px;
-  font-size: 11px;
+  font-size: 8.25px;
   font-weight: 700;
   color: var(--ink-light);
 }
@@ -379,13 +380,13 @@ body {
   color: #fff;
   border-radius: 12px 12px 3px 12px;
   padding: 7px 10px;
-  font-size: 18px;
+  font-size: 13.5px;
   line-height: 1.5;
   max-width: 78%;
 }
 
 .ar-text {
-  font-size: 19px;
+  font-size: 14.25px;
   line-height: 1.7;
   color: var(--ink);
   margin-bottom: 8px;
@@ -428,7 +429,7 @@ body {
 
 .chip {
   flex-shrink: 0;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   padding: 4px 9px;
   border-radius: 12px;
@@ -454,7 +455,7 @@ body {
   right: -5px;
   background: var(--orange);
   color: #fff;
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 800;
   min-width: 13px;
   height: 13px;
@@ -477,7 +478,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 7px 12px;
-  font-size: 20px;
+  font-size: 15px;
   color: var(--ink);
   font-family: inherit;
   outline: none;
@@ -560,7 +561,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 18px;
   color: var(--ink);
   cursor: pointer;
 }
@@ -591,7 +592,7 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 14px;
   padding: 3px 9px;
-  font-size: 14px;
+  font-size: 10.5px;
   font-weight: 700;
   color: var(--ink);
   cursor: pointer;
@@ -624,14 +625,14 @@ body {
 }
 
 .prod-name {
-  font-size: 22px;
+  font-size: 16.5px;
   font-weight: 700;
   margin-bottom: 3px;
   line-height: 1.45;
 }
 
 .prod-meta {
-  font-size: 15px;
+  font-size: 11.25px;
   color: var(--ink-light);
   margin-bottom: 8px;
 }
@@ -660,24 +661,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 12px;
   color: var(--ink-light);
   flex-shrink: 0;
 }
 
 .ac-nm {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .ac-lb {
-  font-size: 14px;
+  font-size: 10.5px;
   color: var(--ink-light);
   margin-left: auto;
 }
 
 .ac-rec {
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1.6;
   color: var(--ink);
 }
@@ -688,7 +689,7 @@ body {
 }
 
 .sec-t {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -712,7 +713,7 @@ body {
 }
 
 .sz {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   padding: 3px 9px;
   border-radius: 5px;
@@ -733,7 +734,7 @@ body {
   top: -7px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 11px;
+  font-size: 8.25px;
   font-weight: 700;
   color: var(--orange);
   background: var(--paper);
@@ -742,7 +743,7 @@ body {
 }
 
 .size-note {
-  font-size: 15px;
+  font-size: 11.25px;
   color: var(--ink-light);
   line-height: 1.5;
   margin-bottom: 8px;
@@ -781,7 +782,7 @@ body {
   position: absolute;
   top: 2px;
   left: 2px;
-  font-size: 10px;
+  font-size: 7.5px;
   font-weight: 700;
   color: #fff;
   background: var(--ink);
@@ -790,7 +791,7 @@ body {
 }
 
 .oi-nm {
-  font-size: 14px;
+  font-size: 10.5px;
   font-weight: 600;
   line-height: 1.2;
   margin-bottom: 1px;
@@ -801,7 +802,7 @@ body {
 }
 
 .oi-pr {
-  font-size: 15px;
+  font-size: 11.25px;
   font-weight: 700;
 }
 
@@ -823,7 +824,7 @@ body {
 }
 
 .buy-price-main {
-  font-size: 30px;
+  font-size: 22.5px;
   font-weight: 700;
   color: var(--ink);
   line-height: 1;
@@ -837,13 +838,13 @@ body {
 }
 
 .buy-price-old {
-  font-size: 16px;
+  font-size: 12px;
   color: var(--ink-faint);
   text-decoration: line-through;
 }
 
 .buy-price-badge {
-  font-size: 14px;
+  font-size: 10.5px;
   font-weight: 700;
   color: var(--orange);
   border: 1px solid var(--orange);
@@ -864,7 +865,7 @@ body {
   width: 68px;
   padding: 0;
   border: none;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -915,7 +916,7 @@ body {
 }
 
 .panel-title {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--ink);
 }
@@ -923,7 +924,7 @@ body {
 .panel-close {
   border: none;
   background: transparent;
-  font-size: 18px;
+  font-size: 13.5px;
   color: var(--ink-light);
   cursor: pointer;
 }
@@ -935,7 +936,7 @@ body {
 
 .empty-text {
   padding: 16px 12px 18px;
-  font-size: 18px;
+  font-size: 13.5px;
   color: var(--ink-light);
 }
 
@@ -982,7 +983,7 @@ body {
 }
 
 .fp-name {
-  font-size: 18px;
+  font-size: 13.5px;
   font-weight: 600;
   margin-bottom: 2px;
   line-height: 1.4;
@@ -993,12 +994,12 @@ body {
 }
 
 .fp-price {
-  font-size: 18px;
+  font-size: 13.5px;
   font-weight: 700;
 }
 
 .fp-time {
-  font-size: 13px;
+  font-size: 9.75px;
   color: var(--ink-faint);
   margin-top: 1px;
 }
@@ -1009,7 +1010,7 @@ body {
 }
 
 .hl-q {
-  font-size: 18px;
+  font-size: 13.5px;
   font-weight: 500;
   color: var(--ink);
   line-height: 1.4;
@@ -1023,12 +1024,12 @@ body {
 }
 
 .hl-time {
-  font-size: 14px;
+  font-size: 10.5px;
   color: var(--ink-faint);
 }
 
 .hl-tag {
-  font-size: 14px;
+  font-size: 10.5px;
   font-weight: 600;
   padding: 1px 5px;
   border-radius: 6px;
@@ -1044,12 +1045,12 @@ body {
 }
 
 .hl-arrow {
-  font-size: 24px;
+  font-size: 18px;
   color: var(--ink-faint);
 }
 
 .phone.detail-open .overlay {
-  bottom: calc(118px + env(safe-area-inset-bottom));
+  bottom: calc(var(--detail-dock-height) + env(safe-area-inset-bottom));
 }
 
 .phone.detail-open .bbot-collapsible {
@@ -1058,11 +1059,12 @@ body {
   right: 0;
   bottom: 0;
   z-index: 35;
-  max-height: 170px;
+  height: calc(var(--detail-dock-height) + env(safe-area-inset-bottom));
+  max-height: none;
 }
 
 .phone.detail-open .panel-region {
-  bottom: calc(126px + env(safe-area-inset-bottom));
+  bottom: calc(var(--detail-dock-height) + env(safe-area-inset-bottom));
 }
 
 @media (max-width: 680px) {
@@ -1071,6 +1073,7 @@ body {
   }
 
   .phone {
+    --detail-dock-height: 152px;
     width: 100vw;
     height: 100dvh;
     border-radius: 0;
@@ -1079,7 +1082,7 @@ body {
   }
 
   .sbar-collapsible {
-    font-size: 26px;
+    font-size: 19.5px;
     padding: calc(11px + env(safe-area-inset-top)) 18px 6px;
   }
 
@@ -1090,19 +1093,19 @@ body {
   .logo {
     width: 36px;
     height: 36px;
-    font-size: 16px;
+    font-size: 12px;
   }
 
   .bname {
-    font-size: 30px;
+    font-size: 22.5px;
   }
 
   .bmeta {
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .btag {
-    font-size: 18px;
+    font-size: 13.5px;
     padding: 2px 6px;
   }
 
@@ -1111,7 +1114,7 @@ body {
   }
 
   .anna-text {
-    font-size: 28px;
+    font-size: 21px;
     line-height: 1.68;
   }
 
@@ -1126,27 +1129,27 @@ body {
 
   .fi-tag {
     min-height: 14px;
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .fi-name {
-    font-size: 26px;
+    font-size: 19.5px;
     min-height: 34px;
   }
 
   .fi-price {
-    font-size: 36px;
+    font-size: 27px;
     line-height: 1.1;
   }
 
   .new-badge,
   .presale-badge {
-    font-size: 16px;
+    font-size: 12px;
     padding: 3px 6px;
   }
 
   .viewed-mark {
-    font-size: 16px;
+    font-size: 12px;
     padding: 2px 6px;
   }
 
@@ -1162,7 +1165,7 @@ body {
   }
 
   .chip {
-    font-size: 24px;
+    font-size: 18px;
     padding: 6px 12px;
     border-radius: 16px;
   }
@@ -1170,7 +1173,7 @@ body {
   .foot-badge {
     top: -6px;
     right: -6px;
-    font-size: 16px;
+    font-size: 12px;
     min-width: 16px;
     height: 16px;
   }
@@ -1182,7 +1185,7 @@ body {
   .input-field {
     border-radius: 20px;
     padding: 10px 14px;
-    font-size: 28px;
+    font-size: 21px;
   }
 
   .send-btn {
@@ -1206,7 +1209,7 @@ body {
   .ov-back {
     width: 26px;
     height: 26px;
-    font-size: 28px;
+    font-size: 21px;
   }
 
   .prod-img {
@@ -1214,7 +1217,7 @@ body {
   }
 
   .tryon-btn {
-    font-size: 20px;
+    font-size: 15px;
     padding: 4px 10px;
   }
 
@@ -1223,11 +1226,11 @@ body {
   }
 
   .prod-name {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .prod-meta {
-    font-size: 22px;
+    font-size: 16.5px;
     margin-bottom: 10px;
   }
 
@@ -1243,24 +1246,24 @@ body {
   .ac-ava {
     width: 20px;
     height: 20px;
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .ac-nm {
-    font-size: 22px;
+    font-size: 16.5px;
   }
 
   .ac-lb {
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .ac-rec {
-    font-size: 24px;
+    font-size: 18px;
     line-height: 1.65;
   }
 
   .sec-t {
-    font-size: 24px;
+    font-size: 18px;
     margin-bottom: 7px;
   }
 
@@ -1274,17 +1277,17 @@ body {
   }
 
   .sz {
-    font-size: 22px;
+    font-size: 16.5px;
     padding: 6px 12px;
   }
 
   .sz.rec::after {
-    font-size: 16px;
+    font-size: 12px;
     top: -10px;
   }
 
   .size-note {
-    font-size: 22px;
+    font-size: 16.5px;
     margin-bottom: 10px;
   }
 
@@ -1303,16 +1306,16 @@ body {
   }
 
   .oi-this {
-    font-size: 14px;
+    font-size: 10.5px;
     padding: 2px 4px;
   }
 
   .oi-nm {
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .oi-pr {
-    font-size: 22px;
+    font-size: 16.5px;
   }
 
   .buy-bar {
@@ -1320,15 +1323,15 @@ body {
   }
 
   .buy-price-main {
-    font-size: 44px;
+    font-size: 33px;
   }
 
   .buy-price-old {
-    font-size: 22px;
+    font-size: 16.5px;
   }
 
   .buy-price-badge {
-    font-size: 20px;
+    font-size: 15px;
     padding: 0 4px;
   }
 
@@ -1338,7 +1341,7 @@ body {
 
   .buy-btn {
     width: 84px;
-    font-size: 22px;
+    font-size: 16.5px;
   }
 
   .canvas {
@@ -1346,12 +1349,12 @@ body {
   }
 
   .user-bubble {
-    font-size: 26px;
+    font-size: 19.5px;
     padding: 9px 12px;
   }
 
   .ar-text {
-    font-size: 26px;
+    font-size: 19.5px;
     line-height: 1.65;
   }
 
@@ -1364,15 +1367,15 @@ body {
   }
 
   .panel-title {
-    font-size: 26px;
+    font-size: 19.5px;
   }
 
   .panel-close {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .empty-text {
-    font-size: 24px;
+    font-size: 18px;
     padding: 18px 14px 20px;
   }
 
@@ -1389,88 +1392,92 @@ body {
 
   .fp-name,
   .hl-q {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .fp-price {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .fp-time,
   .hl-time {
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .hl-tag {
-    font-size: 20px;
+    font-size: 15px;
     padding: 2px 6px;
   }
 
   .hl-arrow {
-    font-size: 28px;
+    font-size: 21px;
   }
 
   .phone.detail-open .overlay {
-    bottom: calc(152px + env(safe-area-inset-bottom));
+    bottom: calc(var(--detail-dock-height) + env(safe-area-inset-bottom));
   }
 
   .phone.detail-open .panel-region {
-    bottom: calc(162px + env(safe-area-inset-bottom));
+    bottom: calc(var(--detail-dock-height) + env(safe-area-inset-bottom));
   }
 }
 
 /* iPhone 14 Pro Max portrait: 430 x 932 */
 @media (min-width: 420px) and (max-width: 440px) and (min-height: 900px) {
+  .phone {
+    --detail-dock-height: 172px;
+  }
+
   .sbar-collapsible {
-    font-size: 30px;
+    font-size: 22.5px;
     padding: calc(12px + env(safe-area-inset-top)) 18px 7px;
   }
 
   .logo {
     width: 38px;
     height: 38px;
-    font-size: 18px;
+    font-size: 13.5px;
   }
 
   .bname {
-    font-size: 36px;
+    font-size: 27px;
   }
 
   .bmeta {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .btag {
-    font-size: 22px;
+    font-size: 16.5px;
     padding: 3px 7px;
   }
 
   .anna-text {
-    font-size: 32px;
+    font-size: 24px;
     line-height: 1.7;
   }
 
   .fi-tag {
-    font-size: 22px;
+    font-size: 16.5px;
     min-height: 16px;
   }
 
   .fi-name {
-    font-size: 30px;
+    font-size: 22.5px;
     min-height: 38px;
   }
 
   .fi-price {
-    font-size: 44px;
+    font-size: 33px;
   }
 
   .chip {
-    font-size: 28px;
+    font-size: 21px;
     padding: 7px 13px;
   }
 
   .input-field {
-    font-size: 32px;
+    font-size: 24px;
     padding: 11px 15px;
   }
 
@@ -1493,62 +1500,62 @@ body {
   }
 
   .phone.detail-open .overlay {
-    bottom: calc(172px + env(safe-area-inset-bottom));
+    bottom: calc(var(--detail-dock-height) + env(safe-area-inset-bottom));
   }
 
   .phone.detail-open .bbot-collapsible {
-    max-height: 186px;
+    height: calc(var(--detail-dock-height) + env(safe-area-inset-bottom));
   }
 
   .phone.detail-open .panel-region {
-    bottom: calc(184px + env(safe-area-inset-bottom));
+    bottom: calc(var(--detail-dock-height) + env(safe-area-inset-bottom));
   }
 
   .prod-name {
-    font-size: 36px;
+    font-size: 27px;
   }
 
   .prod-meta {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .ac-nm,
   .ac-lb {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .ac-rec {
-    font-size: 26px;
+    font-size: 19.5px;
   }
 
   .sec-t {
-    font-size: 26px;
+    font-size: 19.5px;
   }
 
   .sz {
-    font-size: 24px;
+    font-size: 18px;
     padding: 7px 13px;
   }
 
   .size-note {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .oi-nm {
-    font-size: 22px;
+    font-size: 16.5px;
   }
 
   .oi-pr {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .buy-price-main {
-    font-size: 48px;
+    font-size: 36px;
   }
 
   .buy-price-old,
   .buy-price-badge {
-    font-size: 22px;
+    font-size: 16.5px;
   }
 
   .buy-bar-inner {
@@ -1557,19 +1564,19 @@ body {
 
   .buy-btn {
     width: 92px;
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .user-bubble {
-    font-size: 28px;
+    font-size: 21px;
   }
 
   .ar-text {
-    font-size: 28px;
+    font-size: 21px;
   }
 
   .panel-title {
-    font-size: 28px;
+    font-size: 21px;
   }
 
   .panel-close,
@@ -1577,16 +1584,16 @@ body {
   .fp-name,
   .hl-q,
   .fp-price {
-    font-size: 26px;
+    font-size: 19.5px;
   }
 
   .fp-time,
   .hl-time {
-    font-size: 22px;
+    font-size: 16.5px;
   }
 
   .hl-tag {
-    font-size: 22px;
+    font-size: 16.5px;
     padding: 2px 7px;
   }
 }

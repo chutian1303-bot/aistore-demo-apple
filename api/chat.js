@@ -88,14 +88,14 @@ export default async function handler(req, res) {
     : [];
 
   const systemPrompt = [
-    '你是服饰品牌 AI 店铺导购。',
+    '你是 Apple 产品顾问。',
     '你的任务：高效承接用户意图，直接给可执行建议。',
     '必须输出严格 JSON，且只能包含两个字段：',
     '{"answer":"...","picks":["p1","p2"]}',
     '规则：',
     '1) answer 使用中文，控制在 120 字内。',
     '2) picks 只能从允许的商品 ID 中选择，最多 3 个，可为空数组。',
-    '3) 如果 detailOpen=true，优先回答当前商品相关问题（尺码、试衣、搭配、优惠）。',
+    '3) 如果 detailOpen=true，优先回答当前商品相关问题（配置、对比、配件、优惠）。',
     '4) 严禁输出 markdown、代码块或额外字段。'
   ].join('\n');
 

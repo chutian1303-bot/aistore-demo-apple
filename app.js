@@ -1,34 +1,34 @@
-const HOME_TAGS = ['→ 和你风格匹配', '', '→ 近期热销', '', '', '', '', '', '', '', '', ''];
-const HOME_REPLY_TEXT = 'anna 已为你整理好了 28 款新品';
+const HOME_TAGS = ['→ 为你优选', '', '→ 今日热门', '', '', '', '', '', '', '', '', ''];
+const HOME_REPLY_TEXT = 'Apple 顾问已为你整理好了 28 款精选产品';
 
 const FALLBACK_PRODUCTS = [
   {
-    id: '873666070231',
-    name: 'JNBY/江南布衣春秋休闲伞兵裤高支亚麻舒适长裤设计感5P3E10530',
-    price: 978.85,
-    image: 'https://img.alicdn.com/bao/uploaded/i4/412129187/O1CN01NnHtgj2Hjhn0mjPVw_!!412129187.jpg',
-    link: 'https://detail.tmall.com/item.htm?id=873666070231'
+    id: 'apple-iphone-15-pro-256',
+    name: 'Apple iPhone 15 Pro 256GB 原色钛金属',
+    price: 8999,
+    image: 'https://picsum.photos/seed/apple-iphone-15-pro/720/720',
+    link: 'https://www.apple.com/cn/shop/buy-iphone/iphone-15-pro'
   },
   {
-    id: '1025961930122',
-    name: '【商场同款】JNBY/江南布衣26夏新品衬衫棉丝蓝色条纹女5Q521004H',
-    price: 1395,
-    image: 'https://img.alicdn.com/bao/uploaded/i1/412129187/O1CN01jnvOmP2Hjhn2MQgKH_!!412129187.jpg',
-    link: 'https://detail.tmall.com/item.htm?id=1025961930122'
+    id: 'apple-macbook-air-13-m3-16-512',
+    name: 'Apple MacBook Air 13 英寸 M3 16GB+512GB',
+    price: 11499,
+    image: 'https://picsum.photos/seed/apple-macbook-air-13/720/720',
+    link: 'https://www.apple.com/cn/shop/buy-mac/macbook-air'
   },
   {
-    id: '1020045694318',
-    name: '【商场同款】JNBY/江南布衣26夏新品马甲简约V领含亚麻5Q4510540',
-    price: 1395,
-    image: 'https://img.alicdn.com/bao/uploaded/i2/412129187/O1CN01IXD0zc2Hjhn166jWr_!!412129187.jpg',
-    link: 'https://detail.tmall.com/item.htm?id=1020045694318'
+    id: 'apple-ipad-air-11-m2-256',
+    name: 'Apple iPad Air 11 英寸 M2 256GB WLAN',
+    price: 5599,
+    image: 'https://picsum.photos/seed/apple-ipad-air-11/720/720',
+    link: 'https://www.apple.com/cn/shop/buy-ipad/ipad-air'
   },
   {
-    id: '809802427931',
-    name: 'JNBY/江南布衣春秋西服外套H型扭扭乐极简风设计感日常5O7715770',
-    price: 1198.9,
-    image: 'https://img.alicdn.com/bao/uploaded/i3/412129187/O1CN01M6MRaI2Hjhn10IMYN_!!412129187.jpg',
-    link: 'https://detail.tmall.com/item.htm?id=809802427931'
+    id: 'apple-airpods-pro-2-usbc',
+    name: 'Apple AirPods Pro（第二代，USB-C）',
+    price: 1899,
+    image: 'https://picsum.photos/seed/apple-airpods-pro-2/720/720',
+    link: 'https://www.apple.com/cn/shop/product/MTJV3CH/A'
   }
 ];
 
@@ -104,9 +104,7 @@ function money(price) {
 
 function shortName(name) {
   return name
-    .replace(/【[^】]*】/g, '')
-    .replace(/^JNBY\/江南布衣/, '')
-    .replace(/^\//, '')
+    .replace(/^Apple\s*/i, 'Apple ')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -210,18 +208,18 @@ function buildAnswer(query) {
   const activeProduct = getProduct(state.activeProductId);
 
   if (state.detailOpen && activeProduct) {
-    if (text.includes('尺码')) {
+    if (text.includes('配置') || text.includes('内存') || text.includes('容量')) {
       return {
-        summary: '尺码推荐已更新',
-        answer: `这件 ${shortName(activeProduct.name)} 建议优先试 S 码；如果喜欢更宽松，可以试 M 码。`,
+        summary: '配置建议已更新',
+        answer: `${shortName(activeProduct.name)} 建议优先 256GB 起步；如果你有大量照片视频或长期使用计划，建议直接 512GB。`,
         picks: [activeProduct]
       };
     }
 
-    if (text.includes('试衣') || lower.includes('ai')) {
+    if (text.includes('对比') || text.includes('区别') || lower.includes('compare')) {
       return {
-        summary: 'AI试衣建议已更新',
-        answer: `已为你生成 ${shortName(activeProduct.name)} 的 AI 试衣建议：浅色内搭 + 直筒裤更利落，通勤和周末都能穿。`,
+        summary: '机型对比建议已更新',
+        answer: `已为你整理 ${shortName(activeProduct.name)} 的对比建议：优先关注芯片、续航和存储三项，再结合预算做最终选择。`,
         picks: [activeProduct]
       };
     }
@@ -230,23 +228,32 @@ function buildAnswer(query) {
       const discounted = Math.round(activeProduct.price * 0.88 * 100) / 100;
       return {
         summary: '优惠信息已更新',
-        answer: `这件支持店铺券叠加，到手约 ${money(discounted)}，再加购同系列下装可享套装减免。`,
+        answer: `这款支持教育优惠和分期方案，预计到手约 ${money(discounted)}。如果你愿意，我可以继续按预算给你列替代方案。`,
         picks: [activeProduct]
       };
     }
 
     return {
       summary: '商品问答已更新',
-      answer: `关于 ${shortName(activeProduct.name)}，你可以继续问我尺码、AI试衣、搭配方案或优惠方式。`,
+      answer: `关于 ${shortName(activeProduct.name)}，你可以继续问我配置推荐、机型对比、配件搭配或优惠方案。`,
       picks: [activeProduct]
     };
   }
 
-  if (text.includes('风衣') || text.includes('外套') || text.includes('夹克')) {
-    const picks = pickByKeywords(['风衣', '外套', '夹克', '西服'], 5);
+  if (text.includes('iphone') || text.includes('iPhone') || text.includes('手机')) {
+    const picks = pickByKeywords(['iPhone'], 5);
     return {
-      summary: `同风格的风衣 ${picks.length}款`,
-      answer: `给你找到了 ${picks.length} 件同风格外套，版型偏利落，和你最近看的款式风格一致。`,
+      summary: `iPhone 推荐 ${picks.length}款`,
+      answer: `我先给你筛了 ${picks.length} 款 iPhone，兼顾预算、拍照和续航。你可以再补充预算区间，我继续精排。`,
+      picks
+    };
+  }
+
+  if (text.includes('macbook') || text.includes('MacBook') || text.includes('笔记本')) {
+    const picks = pickByKeywords(['MacBook'], 5);
+    return {
+      summary: `MacBook 推荐 ${picks.length}款`,
+      answer: `已为你整理 ${picks.length} 款 MacBook，优先给到性能与便携兼顾的组合，适合学习、办公和内容创作。`,
       picks
     };
   }
@@ -255,16 +262,16 @@ function buildAnswer(query) {
     const picks = [...state.products].sort((a, b) => a.price - b.price).slice(0, 5);
     return {
       summary: `优惠款 ${picks.length}款`,
-      answer: '我先按到手价给你排了更划算的商品，你可以直接点开详情继续问搭配和尺码。',
+      answer: '我先按到手价帮你排了更划算的方案，你可以继续告诉我预算，我再缩小到 2-3 个最适合你的型号。',
       picks
     };
   }
 
-  if (text.includes('新品') || text.includes('上新')) {
+  if (text.includes('新品') || text.includes('上新') || text.includes('推荐')) {
     const picks = state.products.slice(0, 5);
     return {
-      summary: `新品推荐 ${picks.length}款`,
-      answer: '结合你的进店意图，我先把新品里匹配度更高的几款放在这里。',
+      summary: `精选推荐 ${picks.length}款`,
+      answer: '结合你的意图，我先把匹配度更高的 Apple 设备放在这里，你可以继续限定价格或使用场景。',
       picks
     };
   }
@@ -291,7 +298,7 @@ function renderMessageFeed(products) {
 
 function renderCanvas() {
   if (!state.messages.length) {
-    dom.canvas.innerHTML = '<div class="empty-text">你可以直接提问，比如：给我推荐同款风衣。</div>';
+    dom.canvas.innerHTML = '<div class="empty-text">你可以直接提问，比如：预算 7000 左右推荐哪款 iPhone？</div>';
     return;
   }
 
@@ -373,8 +380,8 @@ function openDetail(productId) {
   dom.detailImage.src = product.image;
   dom.detailImage.alt = shortName(product.name);
   dom.detailName.textContent = shortName(product.name);
-  dom.detailMeta.textContent = '100%棉 · 日常通勤 · 可叠搭';
-  dom.detailInsight.innerHTML = `你近期更偏好 <span class="ac-hi">利落廓形</span>，这件 <span class="ac-hi">${escapeHtml(shortName(product.name))}</span> 在版型和颜色上都更匹配。`;
+  dom.detailMeta.textContent = 'Apple 官方正品 · 全国联保 · 支持教育优惠';
+  dom.detailInsight.innerHTML = `结合你的使用场景，这款 <span class="ac-hi">${escapeHtml(shortName(product.name))}</span> 在性能、续航和预算之间更均衡。`;
   dom.buyPriceMain.textContent = money(product.price);
   dom.buyPriceOld.textContent = money(Math.round(product.price * 1.26));
 
@@ -397,7 +404,7 @@ function openDetail(productId) {
   dom.scrim.classList.remove('hidden');
   dom.detailOverlay.classList.remove('hidden');
   dom.detailOverlay.setAttribute('aria-hidden', 'false');
-  dom.intentInput.placeholder = '继续问这件商品：尺码、试衣、优惠、搭配';
+  dom.intentInput.placeholder = '继续问这款商品：配置、对比、优惠、配件';
 
   renderChips();
 }
@@ -435,7 +442,7 @@ function closeDetail() {
   dom.scrim.classList.add('hidden');
   dom.detailOverlay.classList.add('hidden');
   dom.detailOverlay.setAttribute('aria-hidden', 'true');
-  dom.intentInput.placeholder = 'anna 在线，可以问我任何问题';
+  dom.intentInput.placeholder = 'Apple 顾问在线，可以问我任何问题';
 
   if (closedId) {
     recordViewed(closedId);
@@ -448,7 +455,7 @@ function closeDetail() {
     showReplySub(HOME_REPLY_TEXT);
 
     if (!state.prefilledAfterView) {
-      dom.intentInput.value = '找下同风格的外套';
+      dom.intentInput.value = '推荐一款适合学生的 MacBook';
       state.prefilledAfterView = true;
     }
   }
@@ -458,7 +465,7 @@ function formatHistoryTag(message) {
   if (message.picks.length) {
     return `<span class="hl-tag result">推荐了 ${message.picks.length} 个商品</span>`;
   }
-  return '<span class="hl-tag">anna 已回复</span>';
+  return '<span class="hl-tag">Apple 顾问已回复</span>';
 }
 
 function renderPanelList() {
@@ -540,8 +547,8 @@ function closePanel() {
 function renderChips() {
   const badge = state.viewed.length ? `<span class="foot-badge">${state.viewed.length}</span>` : '';
   const base = state.detailOpen
-    ? ['尺码推荐', '搭配建议', 'AI 试衣', '怎么买便宜']
-    : ['找优惠券', '穿搭推荐', 'AI 试衣'];
+    ? ['配置推荐', '配件搭配', '机型对比', '怎么买便宜']
+    : ['找优惠', '场景推荐', '机型对比'];
 
   const chips = [
     { key: 'footprint', label: `👣 店内足迹${badge}`, cls: 'foot' },
@@ -565,14 +572,14 @@ function runChipAction(key) {
     return;
   }
 
-  if (key === 'AI 试衣') {
-    dom.intentInput.value = state.detailOpen ? '帮我生成这件的AI试衣建议' : '给我推荐同款风衣';
-  } else if (key === '搭配建议') {
-    dom.intentInput.value = '帮我搭一套同风格穿搭';
-  } else if (key === '尺码推荐') {
-    dom.intentInput.value = '这件夹克推荐什么尺码';
+  if (key === '机型对比') {
+    dom.intentInput.value = state.detailOpen ? '帮我对比这款和上一代的差异' : '帮我对比 iPhone 和 MacBook 的选择';
+  } else if (key === '配件搭配') {
+    dom.intentInput.value = '给我配一套高性价比的 Apple 配件组合';
+  } else if (key === '配置推荐') {
+    dom.intentInput.value = '这款建议选 256GB 还是 512GB';
   } else if (key === '怎么买便宜') {
-    dom.intentInput.value = '这件怎么买更便宜';
+    dom.intentInput.value = '这款怎么买更便宜';
   } else {
     dom.intentInput.value = key;
   }
@@ -741,7 +748,7 @@ function bindEvents() {
 
   dom.detailCloseBtn.addEventListener('click', closeDetail);
   dom.detailTryBtn.addEventListener('click', () => {
-    dom.intentInput.value = '帮我生成这件的AI试衣建议';
+    dom.intentInput.value = '帮我对比这款和同价位型号';
     sendQuery();
   });
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>JNBY AI 店铺 Demo</title>
+  <title>Apple AI 产品顾问 Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -18,28 +18,28 @@
       </div>
 
       <div class="compact-s1" id="compactBar">
-        <div class="cb-logo">JNBY</div>
+        <div class="cb-logo">APPLE</div>
         <div class="cb-text">
-          <div class="cb-name">JNBY 江南布衣旗舰店</div>
-          <div class="cb-sub">anna 已为你整理好了 28 款新品</div>
+          <div class="cb-name">Apple 官方在线商店</div>
+          <div class="cb-sub">Apple 顾问已为你整理好了 28 款精选产品</div>
         </div>
       </div>
 
       <div class="bbar-collapsible" id="bbar">
         <div class="bbar-inner">
-          <div class="logo">JNBY</div>
+          <div class="logo">APPLE</div>
           <div class="btext">
             <div class="brow1">
-              <span class="bname">JNBY 江南布衣旗舰店</span>
+              <span class="bname">Apple 官方在线商店</span>
               <span class="bdot">·</span>
               <span class="bmeta">⭐4.8</span>
               <span class="bdot">·</span>
-              <span class="bmeta">62.3万粉丝</span>
+              <span class="bmeta">30.8万关注</span>
             </div>
             <div class="brow2">
-              <span class="btag hi">官方旗舰店</span>
-              <span class="btag">品牌设计师</span>
-              <span class="btag">白领精选</span>
+              <span class="btag hi">官方直营</span>
+              <span class="btag">新品速递</span>
+              <span class="btag">教育优惠</span>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@
         <div class="scroll-s1" id="homeScroll">
           <div class="anna-zone" id="annaZone">
             <div class="anna-text" id="welcomeText">
-              hi 王同学，欢迎进店，我是你的专属店铺导购 anna。本店最近上新了 <span class="hi">28 款新品</span>，结合你平时的穿衣风格，已经为你整理好了。
+              hi，欢迎来到 Apple 产品体验馆，我是你的专属产品顾问。根据你最近的浏览偏好，我先为你整理了 <span class="hi">28 款热门设备与配件</span>。
             </div>
           </div>
           <div class="feed-grid" id="feedGrid"></div>
@@ -71,7 +71,7 @@
           <div class="prod-img">
             <img id="detailImage" alt="商品图">
             <div class="img-dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
-            <button class="tryon-btn" id="detailTryBtn" type="button">✦ AI 试衣</button>
+            <button class="tryon-btn" id="detailTryBtn" type="button">✦ 智能对比</button>
           </div>
 
           <div class="ov-body">
@@ -81,22 +81,22 @@
             <div class="anna-card">
               <div class="ac-h">
                 <div class="ac-ava">A</div>
-                <span class="ac-nm">anna 说</span>
+                <span class="ac-nm">顾问建议</span>
                 <span class="ac-lb">专属推荐</span>
               </div>
               <div class="ac-rec" id="detailInsight"></div>
             </div>
 
-            <div class="sec-t">尺码推荐</div>
+            <div class="sec-t">配置建议</div>
             <div class="size-row">
-              <div class="sz">XS</div>
-              <div class="sz rec">S</div>
-              <div class="sz">M</div>
-              <div class="sz">L</div>
+              <div class="sz">128GB</div>
+              <div class="sz rec">256GB</div>
+              <div class="sz">512GB</div>
+              <div class="sz">1TB</div>
             </div>
-            <div class="size-note">根据历史购买记录，建议选 S 码；如果想要更松弛可试 M 码。</div>
+            <div class="size-note">结合你的预算与使用场景，优先推荐 256GB；如果长期拍摄视频可考虑 512GB。</div>
 
-            <div class="sec-t">搭配建议</div>
+            <div class="sec-t">搭配推荐</div>
             <div class="outfit-row" id="outfitRow"></div>
           </div>
         </div>
@@ -106,7 +106,7 @@
             <span class="buy-price-main" id="buyPriceMain">¥0</span>
             <div class="buy-price-sub">
               <span class="buy-price-old" id="buyPriceOld">¥0</span>
-              <span class="buy-price-badge">店铺券</span>
+              <span class="buy-price-badge">教育优惠</span>
             </div>
           </div>
           <div class="buy-bar-inner">
@@ -130,7 +130,7 @@
       <div class="bbot-collapsible" id="bottomBar">
         <div class="chips-row" id="chipsRow"></div>
         <div class="input-row">
-          <input class="input-field" id="intentInput" type="text" autocomplete="off" placeholder="anna 在线，可以问我任何问题">
+          <input class="input-field" id="intentInput" type="text" autocomplete="off" placeholder="Apple 顾问在线，可以问我任何问题">
           <button class="send-btn" id="sendBtn" type="button" aria-label="发送">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <line x1="12" y1="19" x2="12" y2="5"></line>
